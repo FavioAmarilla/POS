@@ -235,7 +235,7 @@ public class FrmReimpresion extends javax.swing.JDialog {
                 + "INNER JOIN PR_PRODUCTOS ON I.ID_PRODUCTO = PR_PRODUCTOS.IDENTIFICADOR\n"
                 + "INNER JOIN FND_TIPOS_IMPUESTO ON I.ID_TIPO_IMPUESTO = FND_TIPOS_IMPUESTO.IDENTIFICADOR\n"
                 + "INNER JOIN VTA_COMPROBANTES ON I.ID_COMPROBANTE = VTA_COMPROBANTES.IDENTIFICADOR\n"
-                + "WHERE I.ID_COMPROBANTE = " + idComprobante + "";
+                + "WHERE I.ID_COMPROBANTE = " + idComprobante + " ORDER BY VTA_ITEMS_COMPROB ASC";
 
         ConexionRs cnRs = new ConexionRs();
         ResultSet rs = cnRs.consultar(sql);
@@ -331,28 +331,28 @@ public class FrmReimpresion extends javax.swing.JDialog {
 
                 //GRAVADAS DEL COMPROBANTE
                 CONTENIDO_IMPRESION += ticket.separador() + "\n";
-                CONTENIDO_IMPRESION += ticket.dobleColumna("Total Gravadas:", miles.format(MONTO_GRAVADO)) + "\n";
+                CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS:", miles.format(MONTO_GRAVADO)) + "\n";
                 if (Math.round(MONTO_GRAVADO5) > 0) {
-                    CONTENIDO_IMPRESION += ticket.dobleColumna("Total Gravadas 5%:", miles.format(Math.round(MONTO_GRAVADO5))) + "\n";
+                    CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS 5%:", miles.format(Math.round(MONTO_GRAVADO5))) + "\n";
                 }
                 if (Math.round(MONTO_GRAVADO10) > 0) {
-                    CONTENIDO_IMPRESION += ticket.dobleColumna("Total Gravadas 10%:", miles.format(Math.round(MONTO_GRAVADO10))) + "\n";
+                    CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS 10%:", miles.format(Math.round(MONTO_GRAVADO10))) + "\n";
                 }
 
                 if (FrmPos.importeExento > 0) {
-                    CONTENIDO_IMPRESION += ticket.dobleColumna("Total Exentas:", miles.format(Math.round(FrmPos.importeExento))) + "\n";
+                    CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS:", miles.format(Math.round(FrmPos.importeExento))) + "\n";
                 }
 
                 //LIQUIDACION DE IVA DEL COMPROBANTE
                 CONTENIDO_IMPRESION += ticket.separador() + "\n";
                 CONTENIDO_IMPRESION += "LIQUIDACION IVA \n";
                 if (Math.round(MONTO_IMPUESTO5) > 0) {
-                    CONTENIDO_IMPRESION += ticket.dobleColumna("Total I.V.A. 5%:", miles.format(Math.round(MONTO_IMPUESTO5))) + "\n";
+                    CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL I.V.A. 5%:", miles.format(Math.round(MONTO_IMPUESTO5))) + "\n";
                 }
                 if (Math.round(MONTO_IMPUESTO10) > 0) {
-                    CONTENIDO_IMPRESION += ticket.dobleColumna("Total I.V.A. 10%:", miles.format(Math.round(MONTO_IMPUESTO10))) + "\n";
+                    CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL I.V.A. 10%:", miles.format(Math.round(MONTO_IMPUESTO10))) + "\n";
                 }
-                CONTENIDO_IMPRESION += ticket.dobleColumna("Total I.V.A.:", miles.format(MONTO_IMPUESTO)) + "\n";
+                CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL I.V.A.:", miles.format(MONTO_IMPUESTO)) + "\n";
 
                 //CLIENTE DEL COMPROBANTE
                 CONTENIDO_IMPRESION += ticket.separador() + "\n";

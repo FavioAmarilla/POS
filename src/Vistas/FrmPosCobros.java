@@ -693,10 +693,10 @@ public class FrmPosCobros extends javax.swing.JDialog {
         //GRAVADAS DEL COMPROBANTE
         lineaImpresion += ticket.separador() + "\n";
         if (Math.round(FrmPos.montoGravado5) > 0) {
-            lineaImpresion += ticket.dobleColumna("TOTAL GRAVADAS 5%:", miles.format(Math.round(FrmPos.montoGravado5 + FrmPos.montoImpuesto5))) + "\n";
+            lineaImpresion += ticket.dobleColumna("TOTAL GRAVADAS 5%:", miles.format(Math.round(FrmPos.montoGravado5))) + "\n";
         }
         if (Math.round(FrmPos.montoGravado10) > 0) {
-            lineaImpresion += ticket.dobleColumna("TOTAL GRAVADAS 10%:", miles.format(Math.round(FrmPos.montoGravado10 + FrmPos.montoImpuesto10))) + "\n";
+            lineaImpresion += ticket.dobleColumna("TOTAL GRAVADAS 10%:", miles.format(Math.round(FrmPos.montoGravado10))) + "\n";
         }
         if (FrmPos.importeExento > 0) {
             lineaImpresion += ticket.dobleColumna("TOTAL EXENTAS:", miles.format(Math.round(FrmPos.importeExento))) + "\n";

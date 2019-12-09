@@ -18,7 +18,6 @@ import Controladores.ContVtaComprobantes;
 import Controladores.ContPrProductos;
 import Controladores.ContStkParametros;
 import Controladores.ContVtaControlComprob;
-import Modelos.AppPromocionesProv;
 import Modelos.StkItemsMvStock;
 import Modelos.StkParametros;
 import Pos.POS;
