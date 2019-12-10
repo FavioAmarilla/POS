@@ -23,7 +23,7 @@ public class Utilidades {
     public static String getHostname() {
         try {
             InetAddress direccion = InetAddress.getLocalHost();
-//            return "CAJA6";
+//            return "CAJA2";
             return direccion.getHostName().toUpperCase();
         } catch (UnknownHostException ex) {
             ControlMensajes.error("hostname: " + ex, Utilidades.class.getName());

@@ -59,7 +59,7 @@ public class ConexionRs {
 
             return rs;
         } catch (SQLException ex) {
-            ControlMensajes.error("consultar: " + ex, ContFndMonedas.class.getName());
+            ControlMensajes.error("consultar: " + ex, ConexionRs.class.getName());
             return null;
         }
     }

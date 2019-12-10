@@ -235,7 +235,7 @@ public class FrmReimpresion extends javax.swing.JDialog {
                 + "INNER JOIN PR_PRODUCTOS ON I.ID_PRODUCTO = PR_PRODUCTOS.IDENTIFICADOR\n"
                 + "INNER JOIN FND_TIPOS_IMPUESTO ON I.ID_TIPO_IMPUESTO = FND_TIPOS_IMPUESTO.IDENTIFICADOR\n"
                 + "INNER JOIN VTA_COMPROBANTES ON I.ID_COMPROBANTE = VTA_COMPROBANTES.IDENTIFICADOR\n"
-                + "WHERE I.ID_COMPROBANTE = " + idComprobante + " ORDER BY VTA_ITEMS_COMPROB ASC";
+                + "WHERE I.ID_COMPROBANTE = " + idComprobante + " ORDER BY I.IDENTIFICADOR ASC";
 
         ConexionRs cnRs = new ConexionRs();
         ResultSet rs = cnRs.consultar(sql);
@@ -301,7 +301,8 @@ public class FrmReimpresion extends javax.swing.JDialog {
                 + "V.MONTO_IMPUESTO10,\n"
                 + "V.NUMERO_DOCUMENTO,\n"
                 + "V.RAZON_SOCIAL,\n"
-                + "(SELECT COUNT(*) FROM VTA_ITEMS_COMPROB WHERE ID_COMPROBANTE = " + idComprobante + ") AS ARTICULOS,\n"
+                + "(SELECT COUNT(*) FROM VTA_ITEMS_COMPROB "
+                + "WHERE ID_COMPROBANTE = " + idComprobante + ") AS ARTICULOS,\n"
                 + "V.MONTO_TOTAL\n"
                 + "FROM VTA_COMPROBANTES  V\n"
                 + "WHERE V.IDENTIFICADOR = " + idComprobante + "";
@@ -331,17 +332,16 @@ public class FrmReimpresion extends javax.swing.JDialog {
 
                 //GRAVADAS DEL COMPROBANTE
                 CONTENIDO_IMPRESION += ticket.separador() + "\n";
-                CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS:", miles.format(MONTO_GRAVADO)) + "\n";
                 if (Math.round(MONTO_GRAVADO5) > 0) {
                     CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS 5%:", miles.format(Math.round(MONTO_GRAVADO5))) + "\n";
                 }
                 if (Math.round(MONTO_GRAVADO10) > 0) {
                     CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS 10%:", miles.format(Math.round(MONTO_GRAVADO10))) + "\n";
                 }
-
                 if (FrmPos.importeExento > 0) {
-                    CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS:", miles.format(Math.round(FrmPos.importeExento))) + "\n";
+                    CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL EXENTO:", miles.format(Math.round(FrmPos.importeExento))) + "\n";
                 }
+                CONTENIDO_IMPRESION += ticket.dobleColumna("TOTAL GRAVADAS:", miles.format(MONTO_GRAVADO)) + "\n";
 
                 //LIQUIDACION DE IVA DEL COMPROBANTE
                 CONTENIDO_IMPRESION += ticket.separador() + "\n";
@@ -384,13 +384,14 @@ public class FrmReimpresion extends javax.swing.JDialog {
     private void pagosTicket(String idComprobante) {
         String sql = "SELECT \n"
                 + "FND_FORMAS_PAGO.DESCRIPCION,\n"
-                + "I.IMPORTE\n"
+                + "I.IMPORTE,\n"
+                + "TC_COBROS_CAJA.IMPORTE_VUELTO\n"
                 + "FROM TC_ITEMS_COBRO I\n"
                 + "INNER JOIN TC_COBROS_CAJA ON TC_COBROS_CAJA.IDENTIFICADOR = I.ID_COBRO\n"
                 + "INNER JOIN FND_FORMAS_PAGO ON FND_FORMAS_PAGO.IDENTIFICADOR = I.ID_FORMA_PAGO\n"
-                + "WHERE TC_COBROS_CAJA.ID_COMPROBANTE = " + idComprobante + "";
-        long impTotal = 0;
+                + "WHERE TC_COBROS_CAJA.ID_COMPROBANTE = " + idComprobante + "  ORDER BY I.IDENTIFICADOR ASC";
         long importe = 0;
+        long vuelto = 0;
         ConexionRs cnRs = new ConexionRs();
         ResultSet rs = cnRs.consultar(sql);
         try {
@@ -399,12 +400,12 @@ public class FrmReimpresion extends javax.swing.JDialog {
             CONTENIDO_IMPRESION += ticket.separador() + "\n";
             CONTENIDO_IMPRESION += "FORMAS DE PAGO\n";
             while (rs.next()) {
-                impTotal = rs.getLong(2);
-                impTotal += importe;
+                importe = rs.getLong(2);
+                vuelto = rs.getLong(3);
                 CONTENIDO_IMPRESION += ticket.dobleColumna(rs.getString(1) + ":", miles.format(importe)) + "\n";
             }
 
-            CONTENIDO_IMPRESION += ticket.dobleColumna("VUELTO:", miles.format(impTotal)) + "\n";
+            CONTENIDO_IMPRESION += ticket.dobleColumna("VUELTO:", miles.format(vuelto)) + "\n";
 
             //FIN DEL COMPROBANTE
             CONTENIDO_IMPRESION += ticket.separador() + "\n";
