@@ -110,8 +110,9 @@ public class FrmMenuCajero extends javax.swing.JFrame {
     }
 
     public void cancelarComprobante() {
-        if (!impresora.habilitado()) {
-            ControlMensajes.error("Impresora no disponible", "MENU DEL CAJERO");
+        if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
+            ControlMensajes.error("GAVETA NO DISPONIBLE", "MENU DEL CAJERO");
+            return;
         }
 
         System.out.println("<INICIO PROCESO DE CANCELACION DE COMPROBANTE>");
@@ -190,17 +191,17 @@ public class FrmMenuCajero extends javax.swing.JFrame {
     private void menu() {
         switch (String.valueOf(listaMenu.getSelectedIndex() + 1)) {
             case "1":
-                if (impresora.habilitado()) {
-                    if (validacionePOS()) {
-                        btnApertura();
-                    }
-                } else {
-                    ControlMensajes.error("Gaveta no disponible", "MENU DEL CAJERO");
+                if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
+                    ControlMensajes.error("GAVETA NO DISPONIBLE", "MENU DEL CAJERO");
+                    return;
+                }
+                if (validacionePOS()) {
+                    btnApertura();
                 }
                 break;
 
             case "2":
-                if (impresora.habilitado()) {
+                if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
                     if (validacionePOS()) {
                         if (getParametrosStock()) {
                             if (Utilidades.getPing()) {
@@ -216,7 +217,7 @@ public class FrmMenuCajero extends javax.swing.JFrame {
                 break;
 
             case "3":
-                if (impresora.habilitado()) {
+                if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
                     if (validacionePOS()) {
                         btnCierre();
                     }
@@ -226,7 +227,7 @@ public class FrmMenuCajero extends javax.swing.JFrame {
                 break;
 
             case "4":
-                if (impresora.habilitado()) {
+                if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
                     if (validacionePOS()) {
                         btnExtraccion();
                     }
@@ -236,7 +237,7 @@ public class FrmMenuCajero extends javax.swing.JFrame {
                 break;
 
             case "5":
-                if (!impresora.habilitado()) {
+                if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
                     ControlMensajes.error("Impresora no disponible", "MENU DEL CAJERO");
                     return;
                 }
@@ -256,7 +257,7 @@ public class FrmMenuCajero extends javax.swing.JFrame {
                 break;
 
             case "6":
-                if (impresora.habilitado()) {
+                if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
                     FrmAutorizacion frm = new FrmAutorizacion();
                     frm.setLocationRelativeTo(null);
                     frm.formulario = "abrirGaveta";

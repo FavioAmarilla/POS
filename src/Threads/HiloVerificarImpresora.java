@@ -14,15 +14,16 @@ public class HiloVerificarImpresora implements Runnable {
     DtsImpresora dts;
 
     public HiloVerificarImpresora(DtsImpresora dt) {
-        dts = dt;
+        this.dts = dt;
     }
 
     @Override
     public void run() {
+        int i = 8;
+        String aChar = (new Character((char) i)).toString();
+
         try {
-            int i = 8;
-            String aChar = new Character((char) i).toString();
-            dts.setVerificado(true);
+            this.dts.setVerificado(true);
 
             FileOutputStream os = new FileOutputStream(ContParamAplicacion.CAJA_PUERTO_IMPRESION);
             PrintStream ps = new PrintStream(os);
@@ -30,10 +31,10 @@ public class HiloVerificarImpresora implements Runnable {
             ps.close();
             os.close();
 
-            dts.setHabilitado(true);
+            this.dts.setHabilitado(true);
         } catch (IOException e) {
-            dts.setVerificado(true);
-            dts.setHabilitado(false);
+            this.dts.setVerificado(true);
+            this.dts.setHabilitado(false);
             Logger.getLogger(Utilidades.class.getName()).log(Level.SEVERE, null, e);
         }
     }

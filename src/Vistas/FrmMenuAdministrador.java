@@ -88,14 +88,14 @@ public class FrmMenuAdministrador extends javax.swing.JFrame {
                 break;
 
             case "3":
-                if (impresora.habilitado()) {
-                    FrmAutorizacion frm = new FrmAutorizacion();
-                    frm.setLocationRelativeTo(null);
-                    frm.formulario = "abrirGaveta";
-                    frm.setVisible(true);
-                } else {
+                if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
                     ControlMensajes.error("GAVETA NO DISPONIBLE", "MENU DEL CAJERO");
+                    return;
                 }
+                FrmAutorizacion frm = new FrmAutorizacion();
+                frm.setLocationRelativeTo(null);
+                frm.formulario = "abrirGaveta";
+                frm.setVisible(true);
                 break;
 
             case "4":

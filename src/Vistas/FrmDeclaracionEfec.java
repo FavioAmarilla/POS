@@ -255,7 +255,7 @@ public final class FrmDeclaracionEfec extends javax.swing.JFrame {
     }
 
     private void btnConf() {
-        if (!impresora.habilitado()) {
+        if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
             ControlMensajes.error("Impresora no disponible", titulo);
             return;
         }
@@ -809,17 +809,17 @@ public final class FrmDeclaracionEfec extends javax.swing.JFrame {
 
     private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            if (impresora.habilitado()) {
-                if (totalValores() > 0) {
-                    btnConf();
-                    System.out.println("<FIN PROCESO DE CIERRE DE CAJA>");
-                } else {
-                    ControlMensajes.informacion("Debe realizar declaracion de efectivo", titulo);
-                    tablaEfectivo.requestFocus();
-                }
-            } else {
+            if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
                 ControlMensajes.error("Impresora no disponible", titulo);
                 btnConfirmar.requestFocus();
+                return;
+            }
+            if (totalValores() > 0) {
+                btnConf();
+                System.out.println("<FIN PROCESO DE CIERRE DE CAJA>");
+            } else {
+                ControlMensajes.informacion("Debe realizar declaracion de efectivo", titulo);
+                tablaEfectivo.requestFocus();
             }
 
         }
@@ -848,18 +848,18 @@ public final class FrmDeclaracionEfec extends javax.swing.JFrame {
 
     private void btnConfirmarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConfirmarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            if (impresora.habilitado()) {
-                if (totalValores() > 0) {
-                    System.out.println("<INICIO PROCESO DE CIERRE DE CAJA>");
-                    btnConf();
-                    System.out.println("<FIN PROCESO DE CIERRE DE CAJA>");
-                } else {
-                    ControlMensajes.informacion("Debe realizar declaracion de efectivo", titulo);
-                    tablaEfectivo.requestFocus();
-                }
-            } else {
+            if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
                 ControlMensajes.error("Impresora no disponible", titulo);
-                btnConfirmar.requestFocus();
+                return;
+            }
+
+            if (totalValores() > 0) {
+                System.out.println("<INICIO PROCESO DE CIERRE DE CAJA>");
+                btnConf();
+                System.out.println("<FIN PROCESO DE CIERRE DE CAJA>");
+            } else {
+                ControlMensajes.informacion("Debe realizar declaracion de efectivo", titulo);
+                tablaEfectivo.requestFocus();
             }
 
         }
@@ -870,18 +870,19 @@ public final class FrmDeclaracionEfec extends javax.swing.JFrame {
 
     private void btnConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarMouseClicked
         if (evt.getClickCount() == 1) {
-            if (impresora.habilitado()) {
-                if (totalValores() > 0) {
-                    System.out.println("<INICIO PROCESO DE CIERRE DE CAJA>");
-                    btnConf();
-                    System.out.println("<FIN PROCESO DE CIERRE DE CAJA>");
-                } else {
-                    ControlMensajes.informacion("Debe realizar declaracion de efectivo", titulo);
-                    tablaEfectivo.requestFocus();
-                }
-            } else {
+            if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
                 ControlMensajes.error("Impresora no disponible", titulo);
                 btnConfirmar.requestFocus();
+                return;
+            }
+            
+            if (totalValores() > 0) {
+                System.out.println("<INICIO PROCESO DE CIERRE DE CAJA>");
+                btnConf();
+                System.out.println("<FIN PROCESO DE CIERRE DE CAJA>");
+            } else {
+                ControlMensajes.informacion("Debe realizar declaracion de efectivo", titulo);
+                tablaEfectivo.requestFocus();
             }
         }
     }//GEN-LAST:event_btnConfirmarMouseClicked

@@ -147,7 +147,7 @@ public final class FrmExtraccionEfectivoDetalle extends javax.swing.JFrame {
     }
 
     private void btnConfirmar() {
-        if (impresora.habilitado()) {
+        if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
             if (totalValores() > 0) {
                 System.out.println("<INICIO PROCESO DE EXTRACCION DE EFECTIVO>");
                 ControlImpresora.abrirGaveta();

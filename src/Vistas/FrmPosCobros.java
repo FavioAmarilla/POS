@@ -1645,7 +1645,7 @@ public class FrmPosCobros extends javax.swing.JDialog {
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         if (evt.getClickCount() == 1) {
-            if (impresora.habilitado()) {
+            if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
                 if (txtImporte()) {
                     FrmPos.lblComprobante.setText(numero(String.valueOf(ultimoNro[1] + 1)));
                     limpiar();
@@ -1686,7 +1686,7 @@ public class FrmPosCobros extends javax.swing.JDialog {
 
     private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            if (impresora.habilitado()) {
+            if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
                 if (txtImporte()) {
                     FrmPos.lblComprobante.setText(numero(String.valueOf(ultimoNro[1] + 1)));
                     limpiar();

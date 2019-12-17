@@ -14,39 +14,39 @@ import java.util.logging.Logger;
 public class ControlImpresora {
 
     DtsImpresora dtsImpresora = new DtsImpresora();
-    private final int PAUSA_PARALELO = 50;
-    private final int PAUSA_SERIAL = 100;
+    private final long PAUSA_PARALELO = 50;
+    private final long PAUSA_SERIAL = 100;
 
     public void verificarImpresora() {
-        HiloVerificarImpresora testImpre = new HiloVerificarImpresora(dtsImpresora);
-        Thread thread = new Thread(testImpre);
+        HiloVerificarImpresora testImpre = new HiloVerificarImpresora(this.dtsImpresora);
+        Thread thread = new Thread((Runnable) testImpre);
         thread.setPriority(10);
         thread.start();
     }
 
     public boolean habilitado() {
-        if (!ContParamAplicacion.CAJA_VR_PUERTO_IMPR.equals("PA") && !ContParamAplicacion.CAJA_VR_PUERTO_IMPR.equals("SE")) {
-            ControlMensajes.error("Puerto de impresion no definido", "Impresora");
-            return false;
-        }
         try {
+            this.dtsImpresora.setVerificado(false);
+            this.dtsImpresora.setHabilitado(false);
+
             verificarImpresora();
             int i = 0;
+            long demoraTestImpresion = 0;
+            if (ContParamAplicacion.CAJA_VR_PUERTO_IMPR.equals("PA")) {
+                demoraTestImpresion = PAUSA_PARALELO;
+            }
+            if (ContParamAplicacion.CAJA_VR_PUERTO_IMPR.equals("SE")) {
+                demoraTestImpresion = PAUSA_SERIAL;
+            }
 
-            dtsImpresora.setVerificado(false);
-            dtsImpresora.setHabilitado(false);
-
-            while ((!dtsImpresora.isVerificado()) && (i <= 10)) {
-                if (ContParamAplicacion.CAJA_VR_PUERTO_IMPR.equals("PA")) {
-                    Thread.sleep(PAUSA_PARALELO);
-                }
-                if (ContParamAplicacion.CAJA_VR_PUERTO_IMPR.equals("SE")) {
-                    Thread.sleep(PAUSA_SERIAL);
-                }
+            while (!this.dtsImpresora.isVerificado() && i <= 10) {
+                Thread.sleep(demoraTestImpresion);
                 i++;
             }
-            return dtsImpresora.isHabilitado();
+
+            return this.dtsImpresora.isHabilitado();
         } catch (InterruptedException e) {
+            ControlMensajes.error("Validacion() " + e, "Impresora");
             Logger.getLogger(ControlImpresora.class.getName()).log(Level.SEVERE, null, e);
             return false;
         }
@@ -54,7 +54,7 @@ public class ControlImpresora {
 
     public static boolean imprimir(String texto) {
         ControlImpresora impresora = new ControlImpresora();
-        if (!impresora.habilitado()) {
+        if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
             ControlMensajes.error("Impresora no disponible", "Impresora");
             return false;
         }
@@ -66,24 +66,17 @@ public class ControlImpresora {
             os.close();
             ps.close();
         } catch (FileNotFoundException ex) {
+            ControlMensajes.error("Impresion() " + ex, "Impresora");
             Logger.getLogger(ControlImpresora.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            ControlMensajes.error("Impresion() " + ex, "Impresora");
             Logger.getLogger(ControlImpresora.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }
 
-    public static boolean abrirGaveta() {
-        System.out.println(ContParamAplicacion.CAJA_USAR_GAVETA);
-        System.out.println(ContParamAplicacion.CAJA_PUERTO_IMPRESION);
-
+    public static void abrirGaveta() {
         if (ContParamAplicacion.CAJA_USAR_GAVETA.equals("S")) {
-            ControlImpresora impresora = new ControlImpresora();
-            if (!impresora.habilitado()) {
-                ControlMensajes.error("Gaveta no disponible", "Impresora");
-                return false;
-            }
-
             try {
                 FileWriter fw = new FileWriter(ContParamAplicacion.CAJA_PUERTO_IMPRESION);
                 fw.write(27);
@@ -94,10 +87,10 @@ public class ControlImpresora {
                 fw.write(0);
                 fw.close();
             } catch (IOException ex) {
+                ControlMensajes.error("Gaveta() " + ex, "Impresora");
                 Logger.getLogger(ControlImpresora.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return true;
     }
 
     public static void cortarPapel() {
@@ -108,6 +101,7 @@ public class ControlImpresora {
                 fw.write(CORTAR_PAPEL); // se manda a la impresora
                 fw.close();
             } catch (IOException ex) {
+                ControlMensajes.error("CortarPapel() " + ex, "Impresora");
                 Logger.getLogger(ControlImpresora.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

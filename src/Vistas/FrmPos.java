@@ -1626,7 +1626,7 @@ public final class FrmPos extends javax.swing.JFrame implements Runnable {
                     ControlMensajes.error("Control de caja no definido para la fecha:: " + Utilidades.getFecha("dd/MM/yyyy"), "Punto de ventas");
                 }
 
-                if (!impresora.habilitado()) {
+                if (!impresora.habilitado() || !impresora.habilitado() || !impresora.habilitado()) {
                     ControlMensajes.error("Impresora no disponible", "Punto de ventas");
                     return;
                 }

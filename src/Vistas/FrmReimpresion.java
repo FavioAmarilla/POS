@@ -640,7 +640,7 @@ public class FrmReimpresion extends javax.swing.JDialog {
 
     private void btnImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirMouseClicked
         if (evt.getClickCount() == 1) {
-            if (impresora.habilitado()) {
+            if (impresora.habilitado() && impresora.habilitado() && impresora.habilitado()) {
                 encabezadoTicket();
                 txtId.setText("");
                 txtdatos.setText("");
